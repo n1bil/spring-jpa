@@ -1,0 +1,189 @@
+Запросы от любого пользователя:
+
+1. Получение списка всех задач
+Method: GET
+URL: /api/tasks
+
+Request: -
+
+Response:
+[
+    {
+        "id": 1,
+        "taskName": "Task1",
+        "description": "Description Task1",
+        "createDate": ....,
+        "lastUpdate": ....,
+        "deadline": ......,
+        "status":   "Open"
+    },
+    {
+    }
+]
+
+
+2. Получение задачи по ID
+Method: GET
+URL: /api/tasks/{id}
+
+Request -
+
+Response:
+    {
+        "id": 1,
+        "taskName": "Task1",
+        "description": "Description Task1",
+        "createDate": ....,
+        "lastUpdate": ....,
+        "deadline": ......,
+        "status":   "Open"
+    }
+
+Запросы для авторизованного пользователя:
+----------------------------------------
+
+
+2. Создать новую задачу
+Method: POST
+URL: /api/tasks/
+
+Request:
+{
+    "taskName": "Task1",
+    "description": "Description Task1",
+    "deadline": ......,
+    "user":     ......,
+}
+
+Response:
+{
+    "id": 1,
+    "taskName": "Task1",
+    "description": "Description Task1",
+    "createDate": ....,
+    "lastUpdate": ....,
+    "deadline": ......,
+    "status":   "Open"
+    "user": {
+                "id:"1,
+                "managerName": "managerName1"
+            },
+}
+
+
+3. Редактировать новую задачу
+Method: PUT
+URL: /api/tasks/{1}
+
+Request:
+{
+    "id": 1,
+    "taskName": "Task1",
+    "description": "Description Task1",
+    "deadline": ......,
+    "status":   "Open"
+    "user":     ......,
+}
+
+Response:
+{
+    "id": 1,
+    "taskName": "Task1",
+    "description": "Description Task1",
+    "createDate": ....,
+    "lastUpdate": ....,
+    "deadline": ......,
+    "status":   "Close"
+    "user": {
+                "id:"1,
+                "managerName": "managerName1"
+            },
+}
+
+
+4. Удалить задачу
+
+-
+
+
+Запросы администратора:
+--------------------------
+
+
+1. Получение списка всех пользователей
+Method: GET
+URL: /api/users
+
+Request -
+
+Response:
+[
+    {
+        "id":            1,
+        "username":      "Task1",
+        "email":         ....,
+        "creationDate":  ....,
+        "lastVisitDate": ......,
+    },
+]
+
+
+2. Получение пользователя по email
+Method: GET
+URL: /api/users/query?email
+
+Request -
+
+Response:
+{
+    "id":            1,
+    "username":      "Task1",
+    "email":         ....,
+    "creationDate":  ....,
+    "lastVisitDate": ......,
+},
+
+
+3. Удалить пользователя по ID
+
+-
+
+4. Получить полный развернутый список всех задач
+
+Request -
+
+Response:
+[
+    {
+        "id":            1,
+        "username":      "Task1",
+        "email":         ....,
+        "creationDate":  ....,
+        "lastVisitDate": ......,
+        [
+            {
+                "id": 1,
+                "taskName": "Task1",
+                "description": "Description Task1",
+                "createDate": ....,
+                "lastUpdate": ....,
+                "deadline": ......,
+                "user":     ......,
+                "status":   ""
+            },
+            {
+            }
+        ]
+    },
+    {
+    }
+]
+
+
+
+
+
+
+
+
+
