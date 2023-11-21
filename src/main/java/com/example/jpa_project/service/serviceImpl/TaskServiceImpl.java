@@ -7,8 +7,8 @@ import com.example.jpa_project.payload.task.TaskCreateRequestDTO;
 import com.example.jpa_project.payload.task.TaskResponseDTO;
 import com.example.jpa_project.payload.task.TaskUpdateRequestDTO;
 import com.example.jpa_project.repository.TaskRepository;
-import com.example.jpa_project.utils.TaskConverters;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,34 +20,34 @@ import java.util.stream.Collectors;
 public class TaskServiceImpl {
 
     private TaskRepository repository;
-    private TaskConverters converters;
+    private ModelMapper modelMapper;
 
     public List<TaskResponseDTO> findAllTasks() {
         List<Task> tasks = repository.findAll();
 
         return tasks.stream()
-                .map(converters::toDto)
+                .map(task -> modelMapper.map(task, TaskResponseDTO.class))
                 .collect(Collectors.toList());
     }
 
     public TaskResponseDTO findTaskById(Integer id) {
         Optional<Task> task = repository.findById(id);
 
-        return converters.toDto(task.orElseThrow(() -> new NotFoundException("Task with " + id + " not exist")));
+        return modelMapper.map(task.orElseThrow(() -> new NotFoundException("Task with " + id + " not exist")), TaskResponseDTO.class);
     }
 
     public TaskCreateOrUpdateResponseDTO createTask(TaskCreateRequestDTO requestDTO) {
-        Task newTask = converters.fromCreateRequest(requestDTO);
+        Task newTask = modelMapper.map(requestDTO, Task.class);
         newTask = repository.save(newTask);
 
-        return converters.toCreateDto(newTask);
+        return modelMapper.map(newTask, TaskCreateOrUpdateResponseDTO.class);
     }
 
     public TaskCreateOrUpdateResponseDTO updateTask(TaskUpdateRequestDTO requestDTO) {
-        Task foundTask = converters.fromUpdateRequest(requestDTO);
+        Task foundTask = modelMapper.map(requestDTO, Task.class);
         foundTask = repository.save(foundTask);
 
-        return converters.toCreateDto(foundTask);
+        return modelMapper.map(foundTask, TaskCreateOrUpdateResponseDTO.class);
     }
 
     public void deleteTask(Integer id) {

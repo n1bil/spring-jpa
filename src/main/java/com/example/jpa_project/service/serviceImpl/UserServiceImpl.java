@@ -7,8 +7,8 @@ import com.example.jpa_project.payload.user.UserCreateRequestDTO;
 import com.example.jpa_project.payload.user.UserCreateResponseDTO;
 import com.example.jpa_project.payload.user.UserResponseDTO;
 import com.example.jpa_project.repository.UserRepository;
-import com.example.jpa_project.utils.UserConverters;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,29 +18,26 @@ import java.util.List;
 public class UserServiceImpl {
 
     private final UserRepository repository;
-    private final UserConverters converter;
+    private final ModelMapper modelMapper;
 
-    // получить список всех пользователей
 
     public List<UserResponseDTO> findAllUsers() {
         return repository.findAll().stream()
-                .map(converter::toDto)
+                .map(user -> modelMapper.map(user, UserResponseDTO.class))
                 .toList();
     }
 
-    //найти пользователя по email
     public UserResponseDTO findByUserEmail(String email){
-        User manager = repository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found with email: " + email));
-        return converter.toDto(manager);
-    }
+        User user = repository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found with email: " + email));
 
-    // Создать нового пользователя
+        return modelMapper.map(user, UserResponseDTO.class);
+    }
 
     public UserCreateResponseDTO createUser(UserCreateRequestDTO requestDTO) {
         if (repository.findByEmail(requestDTO.getEmail()).isEmpty()) {
-            User newUser = converter.fromDto(requestDTO);
+            User newUser = modelMapper.map(requestDTO, User.class);
             newUser = repository.save(newUser);
-            return converter.toCreateDto(newUser);
+            return modelMapper.map(newUser, UserCreateResponseDTO.class);
         } else {
             throw new IsAlreadyExistException("User with email " + requestDTO.getEmail() + " is already exist!");
         }
