@@ -2,13 +2,12 @@ package com.example.jpa_project.payload.task;
 
 import com.example.jpa_project.entity.TaskStatus;
 import com.example.jpa_project.payload.user.UserCreateResponseDTO;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskCreateOrUpdateResponseDTO {
@@ -20,6 +19,6 @@ public class TaskCreateOrUpdateResponseDTO {
     private LocalDateTime lastUpdate;
     private LocalDateTime deadline;
     private TaskStatus status;
-    private UserCreateResponseDTO managerCreateResponseDTO;
+    private UserCreateResponseDTO userCreateResponseDTO;
 
 }

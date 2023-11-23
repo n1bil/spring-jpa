@@ -1,9 +1,15 @@
 package com.example.jpa_project.controller;
 
+import com.example.jpa_project.payload.task.TaskCreateOrUpdateResponseDTO;
+import com.example.jpa_project.payload.task.TaskCreateRequestDTO;
+import com.example.jpa_project.payload.task.TaskResponseDTO;
+import com.example.jpa_project.payload.task.TaskUpdateRequestDTO;
 import com.example.jpa_project.payload.user.UserCreateRequestDTO;
 import com.example.jpa_project.payload.user.UserCreateResponseDTO;
 import com.example.jpa_project.payload.user.UserResponseDTO;
+import com.example.jpa_project.service.serviceImpl.TaskServiceImpl;
 import com.example.jpa_project.service.serviceImpl.UserServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,39 +17,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user/task")
+@AllArgsConstructor
 public class UserController {
 
-    private UserServiceImpl service;
+    private TaskServiceImpl taskService;
 
-    public UserController(UserServiceImpl userService) {
-        this.service = userService;
+    @GetMapping(params = "username")
+    public ResponseEntity<List<TaskResponseDTO>> findTaskByUsername(@RequestParam String username) {
+        List<TaskResponseDTO> tasksByUsername = taskService.findTasksByUsername(username);
+
+        return new ResponseEntity<>(tasksByUsername, HttpStatus.OK);
     }
 
-    @PostMapping("/")
-    public ResponseEntity<UserCreateResponseDTO> addUser(@RequestBody UserCreateRequestDTO userDto) {
-        UserCreateResponseDTO createdUser = service.createUser(userDto);
+    @PostMapping
+    public ResponseEntity<TaskCreateOrUpdateResponseDTO> createNewTask(@RequestBody TaskCreateRequestDTO request) {
+        TaskCreateOrUpdateResponseDTO createdTask = taskService.createTask(request);
 
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+        return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<UserResponseDTO>> findAllUsers() {
-        List<UserResponseDTO> users = service.findAllUsers();
+    @PutMapping
+    public ResponseEntity<TaskCreateOrUpdateResponseDTO> updateTaskById(@RequestBody TaskUpdateRequestDTO request) {
+        TaskCreateOrUpdateResponseDTO updatedTask = taskService.updateTask(request);
 
-        return new ResponseEntity<>(users, HttpStatus.OK);
-    }
-
-    @GetMapping("/query")
-    public ResponseEntity<UserResponseDTO> findUserByEmail(@RequestParam String email) {
-        UserResponseDTO foundUser = service.findByUserEmail(email);
-
-        return new ResponseEntity<>(foundUser, HttpStatus.OK);
+        return new ResponseEntity<>(updatedTask, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
-        service.deleteUser(id);
+    public ResponseEntity<String> deleteTaskById(@PathVariable Integer id) {
+        taskService.deleteTask(id);
 
         return new ResponseEntity<>("User with id " + id + " was deleted!", HttpStatus.OK);
     }

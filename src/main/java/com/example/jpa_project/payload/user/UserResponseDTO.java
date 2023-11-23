@@ -1,18 +1,18 @@
 package com.example.jpa_project.payload.user;
 
+import com.example.jpa_project.entity.Role;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
-
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 public class UserResponseDTO {
 
     private Integer id;
     private String username;
     private String email;
-    private LocalDateTime createManagerDate;
-    private LocalDateTime lastUpdate;
+    private Role roleName;
 
 }

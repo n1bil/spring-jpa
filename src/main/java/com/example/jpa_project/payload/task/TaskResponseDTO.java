@@ -1,13 +1,12 @@
 package com.example.jpa_project.payload.task;
 
 import com.example.jpa_project.entity.TaskStatus;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskResponseDTO {

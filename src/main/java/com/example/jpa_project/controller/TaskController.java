@@ -21,14 +21,14 @@ public class TaskController {
         this.service = toDoService;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<TaskCreateOrUpdateResponseDTO> addTodo(@RequestBody TaskCreateRequestDTO todoDto) {
         TaskCreateOrUpdateResponseDTO toDo = service.createTask(todoDto);
 
         return new ResponseEntity<>(toDo, HttpStatus.CREATED);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<TaskResponseDTO>> findAllTodos() {
         List<TaskResponseDTO> todos = service.findAllTasks();
 
@@ -42,7 +42,7 @@ public class TaskController {
         return new ResponseEntity<>(todo, HttpStatus.OK);
     }
 
-    @PutMapping("/")
+    @PutMapping
     public ResponseEntity<TaskCreateOrUpdateResponseDTO> updateTodo(@RequestBody TaskUpdateRequestDTO todoDto) {
         TaskCreateOrUpdateResponseDTO todo = service.updateTask(todoDto);
 
