@@ -90,27 +90,6 @@ public class TaskServiceImpl {
 
 
 
-/*
-public TaskCreateOrUpdateResponseDTO createTask(TaskCreateRequestDTO requestDTO) {
-        User foundUser = userRepository.findByEmail(requestDTO.getEmail()).orElseThrow(() -> new NotFoundException("User not found with email: " + requestDTO.getEmail()));
-        Task newTask = modelMapper.map(requestDTO, Task.class);
-        newTask.setUser(foundUser);
-        newTask.setStatus(TaskStatus.Open);
-
-        Task savedTask = taskRepository.save(newTask);
-
-        TaskCreateOrUpdateResponseDTO taskMap = modelMapper.map(savedTask, TaskCreateOrUpdateResponseDTO.class);
-        UserCreateResponseDTO userMap = modelMapper.map(foundUser, UserCreateResponseDTO.class);
-        taskMap.setUserCreateResponseDTO(userMap);
-
-        return taskMap;
-    }
- */
-
-
-
-
-
 
 
 

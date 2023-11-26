@@ -37,13 +37,12 @@
 <!--        </addColumn>-->
 <!--    </changeSet>-->
 
-    <changeSet id="insert.default.user" author="author">
-        <insert tableName="users">
-            <column name="username" value="Administrator"/>
-            <column name="password" value="pass12345"/>
-            <column name="email" value="admin@company.com"/>
-        </insert>
-
-    </changeSet>
+<!--    <changeSet id="insert.default.user" author="author">-->
+<!--        <insert tableName="users">-->
+<!--            <column name="username" value="Administrator"/>-->
+<!--            <column name="password" value="pass12345"/>-->
+<!--            <column name="email" value="admin@company.com"/>-->
+<!--        </insert>-->
+<!--    </changeSet>-->
 
 </databaseChangeLog>

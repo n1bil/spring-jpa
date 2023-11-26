@@ -9,6 +9,7 @@ import com.example.jpa_project.payload.user.UserCreateResponseDTO;
 import com.example.jpa_project.payload.user.UserResponseDTO;
 import com.example.jpa_project.service.serviceImpl.TaskServiceImpl;
 import com.example.jpa_project.service.serviceImpl.UserServiceImpl;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskCreateOrUpdateResponseDTO> createNewTask(@RequestBody TaskCreateRequestDTO request) {
+    public ResponseEntity<TaskCreateOrUpdateResponseDTO> createNewTask(@Valid @RequestBody TaskCreateRequestDTO request) {
         TaskCreateOrUpdateResponseDTO createdTask = taskService.createTask(request);
 
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
